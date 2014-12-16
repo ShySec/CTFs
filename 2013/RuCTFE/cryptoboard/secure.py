@@ -1,9 +1,8 @@
 #!/usr/bin/python2
-import time
-import BaseHTTPServer
-import urlparse
-from Crypto.Cipher import AES
+import os
 import binascii
+import urlparse
+import BaseHTTPServer
 
 HOST_NAME = '0.0.0.0'
 PORT_NUMBER = 4369
@@ -64,8 +63,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			return
 
 	def get_random_hex(self, bytelen):
-		with open("/dev/random", "rb") as f:
-			return f.read(bytelen).encode("HEX")
+		return os.urandom(bytelen).encode("HEX")
 
 	def list(self):
 		return '%s %s'%(self.get_random_hex(8),self.get_random_hex(32))
@@ -88,6 +86,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
+	import time
 	print "Server init..."
 	httpd = BaseHTTPServer.HTTPServer((HOST_NAME, PORT_NUMBER), MyHandler)
 
