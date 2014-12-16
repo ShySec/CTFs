@@ -64,7 +64,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 			return
 
 	def get_random_hex(self, bytelen):
-		with open("/proc/random", "rb") as f:
+		with open("/dev/random", "rb") as f:
 			return f.read(bytelen).encode("HEX")
 
 	def list(self):
